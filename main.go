@@ -5,6 +5,7 @@ import (
 	"encoding/xml"
 	"exporter/exporter"
 	"io/ioutil"
+	"strconv"
 )
 
 func main() {
@@ -20,17 +21,29 @@ func main() {
 
 	//ScrollFeeds(fb, twtr, ldin)
 
-	f, _ := json.MarshalIndent(fb, "", " ")
+	feedf := make(map[string]string)
+	for i := range fb.Feed() {
+		feedf[strconv.Itoa(i+1)] = fb.Feed()[i]
+	}
+	f, _ := json.MarshalIndent(feedf, "", " ")
 	_ = ioutil.WriteFile("facebook.json", f, 0644)
-	fcb, _ := xml.MarshalIndent(fb, "", " ")
+	fcb, _ := xml.MarshalIndent(fb.Feed(), "", " ")
 	_ = ioutil.WriteFile("facebook.xml", fcb, 0644)
 
-	t, _ := json.MarshalIndent(twtr, "", " ")
+	feedt := make(map[string]string)
+	for i := range twtr.Feed() {
+		feedt[strconv.Itoa(i+1)] = twtr.Feed()[i]
+	}
+	t, _ := json.MarshalIndent(feedt, "", " ")
 	_ = ioutil.WriteFile("twitter.json", t, 0644)
 	tw, _ := xml.MarshalIndent(twtr, "", " ")
 	_ = ioutil.WriteFile("twitter.xml", tw, 0644)
 
-	in, _ := json.MarshalIndent(ldin, "", " ")
+	feedl := make(map[string]string)
+	for i := range ldin.Feed() {
+		feedl[strconv.Itoa(i+1)] = ldin.Feed()[i]
+	}
+	in, _ := json.MarshalIndent(feedl, "", " ")
 	_ = ioutil.WriteFile("linkedin.json", in, 0644)
 	lin, _ := xml.MarshalIndent(ldin, "", " ")
 	_ = ioutil.WriteFile("linkedin.xml", lin, 0644)

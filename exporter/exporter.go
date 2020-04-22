@@ -18,6 +18,7 @@ func (f *Facebook) Feed() []string {
 		"Hey, here's my cool new selfie",
 		"What is code?",
 	}
+
 }
 
 // Fame tell how famous a user is. The higher
